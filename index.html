@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cristian Saavedra | Portafolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        accent: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(45deg, #0ea5e9, #8b5cf6);
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Estilos para el carrusel de clases */
+        .classes-carousel {
+            position: relative;
+            overflow: hidden;
+            height: auto;
+            min-height: 400px;
+        }
+        
+        .class-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+            transform: translateX(100%);
+        }
+        
+        .class-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .class-slide.next {
+            transform: translateX(100%);
+        }
+        
+        .class-slide.prev {
+            transform: translateX(-100%);
+        }
+        
+        .class-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 20;
+        }
+        
+        .class-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .class-indicator.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        .class-card {
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .classes-carousel {
+                height: auto;
+                min-height: 500px;
+            }
+            
+            .class-card {
+                padding: 1rem;
+            }
+            
+            .class-slide {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <style>
+        .carousel-container {
+            width: 100%;
+        }
+
+        .carousel-track {
+            width: 300%; /* 3 items = 300% */
+        }
+
+        .carousel-item {
+            width: 33.333%; /* Each item takes 1/3 of the track */
+        }
+
+        .carousel-indicator.active {
+            background-color: #4f46e5; /* primary color */
+        }
+    </style>
+
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #4f46e5, #10b981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <style>
+        /* Estilos para el carrusel de voluntariados */
+        .volunteer-carousel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .volunteer-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .volunteer-item {
+            min-width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .volunteer-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .volunteer-nav button {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .volunteer-nav button:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .volunteer-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .volunteer-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .volunteer-indicator.active {
+            background: #4f46e5;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .volunteer-item {
+                padding: 0 10px;
+            }
+            
+            .volunteer-nav button {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Transición suave para el menú móvil */
+        .mobile-menu {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <!-- Header -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-sm border-b border-gray-100 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <a href="#" class="text-xl sm:text-2xl font-bold">
+                <span class="gradient-text">CRISTIAN</span>
+                <span class="text-gray-800">SAAVEDRA</span>
+            </a>
+            
+            <!-- Botón hamburguesa para móviles -->
+            <button id="menu-toggle" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            
+            <!-- Menú normal para desktop -->
+            <nav class="hidden md:block">
+                <ul class="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
+                    <li><a href="#home" class="text-sm sm:text-base font-medium hover:text-primary-600 transition-colors">Inicio</a></li>
+                    <li><a href="#projects" class="text-sm sm:text-base font-medium hover:text-primary-600 transition-colors">Portafolio</a></li>
+                    <li><a href="#works" class="text-sm sm:text-base font-medium hover:text-primary-600 transition-colors">Clases</a></li>
+                    <li><a href="#volunteer" class="text-sm sm:text-base font-medium hover:text-primary-600 transition-colors">Voluntariados</a></li>
+                    <li><a href="#classes" class="text-sm sm:text-base font-medium hover:text-primary-600 transition-colors">Clases</a></li>
+                    <li><a href="#contact" class="text-sm sm:text-base font-medium hover:text-primary-600 transition-colors">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Menú móvil (oculto por defecto) -->
+        <div id="mobile-menu" class="mobile-menu md:hidden hidden bg-white w-full px-4 pb-4">
+            <ul class="flex flex-col gap-4">
+                <li><a href="#home" class="block py-2 text-base font-medium hover:text-primary-600 transition-colors">Inicio</a></li>
+                <li><a href="#projects" class="block py-2 text-base font-medium hover:text-primary-600 transition-colors">Portafolio</a></li>
+                <li><a href="#works" class="block py-2 text-base font-medium hover:text-primary-600 transition-colors">Clases</a></li>
+                <li><a href="#volunteer" class="block py-2 text-base font-medium hover:text-primary-600 transition-colors">Voluntariados</a></li>
+                <li><a href="#classes" class="block py-2 text-base font-medium hover:text-primary-600 transition-colors">Clases</a></li>
+                <li><a href="#contact" class="block py-2 text-base font-medium hover:text-primary-600 transition-colors">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-16 sm:pt-20">
+        <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+                <!-- Text Content -->
+                <div class="max-w-3xl lg:flex-1">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6">
+                        Cristian Saavedra<br>
+                        <span class="gradient-text">Ingeniería Civil Electrónica</span>
+                    </h1>
+                    <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
+                        Desarrollador Fullstack y Profesor de Robótica. 
+                        Me apasiona enseñar tecnologías a personas que no pueden entenderlas.
+                    </p>
+                    
+                    <!-- Información académica actualizada -->
+                    <div class="mb-6 sm:mb-8">
+                        <div class="flex items-center text-gray-700 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                            </svg>
+                            <span class="font-medium">Estudiante de Ingeniería Civil Electrónica</span>
+                        </div>
+                        <div class="flex items-center text-gray-700 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <span class="font-medium">Universidad de Concepción</span>
+                        </div>
+                        <div class="flex items-center text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <span class="font-medium">Semestre actual: 6°</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 sm:space-x-4 text-gray-700">
+                        <a href="https://www.instagram.com/cr_saavedra/" class="text-sm sm:text-base hover:text-primary-600 transition-colors font-medium"><i class="fa-brands fa-instagram mr-2"></i> Instagram</a>
+                    </div>
+                </div>
+
+                <!-- Foto redondeada -->
+                <div class="lg:flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
+                    <div class="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72">
+                        <img src="./fotos/personal.JPEG" 
+                            alt="Foto de perfil"
+                            class="rounded-full object-cover w-full h-full border-4 border-white shadow-lg">
+                        <div class="absolute inset-0 rounded-full border-4 border-transparent animate-spin-slow" style="border-top-color: #4f46e5; border-right-color: #10b981;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-12 sm:py-20 bg-gradient-to-br from-primary-50 to-secondary-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-center uppercase">Proyectos</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base">
+                Algunos proyectos que he realizado utilizando diversas tecnologías modernas.
+            </p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="relative h-40 sm:h-48">
+                        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                            alt="Game of Life"
+                            class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 transition-all duration-300 transform translate-y-2">
+                            <a href="game-of-life.html" class="px-3 sm:px-4 py-1 sm:py-2 bg-white text-primary-700 font-medium rounded-full text-sm sm:text-base">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2">Juego de la vida</h3>
+                        <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Autómata celular implementado con HTML5, CSS3 y JavaScript.</p>
+                        <div class="flex space-x-3 sm:space-x-4 text-xs sm:text-sm">
+                            <span class="flex items-center"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-gray-400 mr-1"></span> Repositorio</span>
+                            <span class="flex items-center text-accent-600"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-accent-600 bg-accent-100 mr-1 flex items-center justify-center">✓</span> Deploy</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="relative h-40 sm:h-48 w-full">
+
+                        <img src="./fotos/logo-impulsa.png" 
+                            alt="Game of Life"
+                            class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 transition-all duration-300 transform translate-y-2">
+                            <a href="https://impulsaciencia.app/" class="px-3 sm:px-4 py-1 sm:py-2 bg-white text-primary-700 font-medium rounded-full text-sm sm:text-base">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2">Impulsa Ciencia</h3>
+                        <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Plataforma hecha en NodeJS, Mongodb, HTML5, CSS3, Tailwind, JavaScript.</p>
+                        <div class="flex space-x-3 sm:space-x-4 text-xs sm:text-sm">
+                            <span class="flex items-center"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-gray-400 mr-1"></span> Repositorio</span>
+                            <span class="flex items-center text-accent-600"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-accent-600 bg-accent-100 mr-1 flex items-center justify-center">✓</span> Deploy</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="relative h-40 sm:h-48">
+                        <img src="./fotos/logo-aburto.png" 
+                            alt="Corredora Aburto Propiedades"
+                            class="w-full h-full object-cover">
+                        <div class="project-overlay absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 transition-all duration-300 transform translate-y-2">
+                            <a href="https://corredoraaburto.cl/" class="px-3 sm:px-4 py-1 sm:py-2 bg-white text-primary-700 font-medium rounded-full text-sm sm:text-base">Ver Detalles</a>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2">Task Management</h3>
+                        <p class="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">Aplicación de gestión para una corredora de propiedades, realizada en NodeJS, Mongodb, HTML5, CSS3, JavaScript.</p>
+                        <div class="flex space-x-3 sm:space-x-4 text-xs sm:text-sm">
+                            <span class="flex items-center"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-gray-400 mr-1"></span> Repositorio</span>
+                            <span class="flex items-center text-accent-600"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-accent-600 bg-accent-100 mr-1 flex items-center justify-center">✓</span> Deploy</span>
+                            <!--
+                                <span class="flex items-center text-accent-600"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-accent-600 bg-accent-100 mr-1 flex items-center justify-center">✓</span> Repositorio</span>
+                                <span class="flex items-center"><span class="inline-block w-3 h-3 sm:w-4 sm:h-4 border border-gray-400 mr-1"></span> Deploy</span>
+                            -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section id="works" class="py-12 sm:py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center uppercase">Experiencia</h2>
+            
+            <!-- Carrusel Container -->
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Carrusel Items -->
+                <div class="carousel-container overflow-hidden">
+                    <div class="carousel-track flex transition-transform duration-300 ease-in-out">
+                        <!-- Item 1 -->
+                        <div class="carousel-item flex-shrink-0 px-2">
+                            <div class="bg-gradient-to-br from-primary-50 to-secondary-50 p-6 sm:p-8 rounded-xl h-full">
+                                <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 uppercase break-words">Profesor de Robótica</h3>
+                                <h4 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-700 break-words">Colegio Rucalhue</h4>
+                                
+                                <!-- Sección de fechas -->
+                                <div class="flex items-center text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 flex-wrap">
+                                    <span class="mr-2">📅</span>
+                                    <span>Desde: <span class="font-medium">Junio 2024</span></span>
+                                    <span class="mx-2">-</span>
+                                    <span>Hasta: <span class="font-medium">Actualidad</span></span>
+                                </div>
+                                
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base break-words">Me desempeño como profesor del taller extraprogramático de robótica de la misma institución. Me encargo de la metodología y planificación de este mismo.</p>
+                                <div class="space-y-2 sm:space-y-3 flex flex-wrap gap-2">
+                                    <span class="inline-block bg-primary-100 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">C++</span>
+                                    <span class="inline-block bg-secondary-100 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Arduino</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="carousel-item flex-shrink-0 px-2">
+                            <div class="bg-gradient-to-br from-primary-50 to-secondary-50 p-6 sm:p-8 rounded-xl h-full">
+                                <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 uppercase break-words">Mentor de Robótica</h3>
+                                <h4 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-700 break-words">Fundación Gabriel y Mary Mustakis</h4>
+                                
+                                <!-- Sección de fechas -->
+                                <div class="flex items-center text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 flex-wrap">
+                                    <span class="mr-2">📅</span>
+                                    <span>Desde: <span class="font-medium">Marzo 2024</span></span>
+                                    <span class="mx-2">-</span>
+                                    <span>Hasta: <span class="font-medium">Actualidad</span></span>
+                                </div>
+                                
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base break-words">Mentor del programa de Ciencia y Tecnología. Me desempeño como mentor del Club de Robótica en la categoría de Rescue Line.</p>
+                                <div class="space-y-2 sm:space-y-3 flex flex-wrap gap-2">
+                                    <span class="inline-block bg-primary-100 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">C++</span>
+                                    <span class="inline-block bg-secondary-100 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Arduino</span>
+                                    <span class="inline-block bg-accent-100 text-accent-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Latex</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="carousel-item flex-shrink-0 px-2">
+                            <div class="bg-gradient-to-br from-primary-50 to-secondary-50 p-6 sm:p-8 rounded-xl h-full">
+                                <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 uppercase break-words">Jefe del area de desarrollo</h3>
+                                <h4 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-700 break-words">Crimson Data Intelligence</h4>
+                                
+                                <!-- Sección de fechas -->
+                                <div class="flex items-center text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 flex-wrap">
+                                    <span class="mr-2">📅</span>
+                                    <span>Desde: <span class="font-medium">Marzo 2020</span></span>
+                                    <span class="mx-2">-</span>
+                                    <span>Hasta: <span class="font-medium">Marzo 2023</span></span>
+                                </div>
+                                
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base break-words">Me desempeñé como encargado del área de desarrollo en la misma empresa. Lideré un grupo de alumnos en práctica de Ing. Informática conformado por diversos estudiantes de alrededor de Chile, además de contactar y desarrollar informes de avances para clientes.</p>
+                                <div class="space-y-2 sm:space-y-3 flex flex-wrap gap-2">
+                                    <span class="inline-block bg-primary-100 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">C++</span>
+                                    <span class="inline-block bg-secondary-100 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Arduino</span>
+                                    <span class="inline-block bg-accent-100 text-accent-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Latex</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                <!-- Indicators -->
+                <div class="flex justify-center mt-6 space-x-2">
+                    <button class="carousel-indicator w-3 h-3 rounded-full bg-gray-300" data-index="0"></button>
+                    <button class="carousel-indicator w-3 h-3 rounded-full bg-gray-300" data-index="1"></button>
+                    <button class="carousel-indicator w-3 h-3 rounded-full bg-gray-300" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voluntariados Section -->
+    <section id="volunteer" class="py-12 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center uppercase">Voluntariados</h2>
+            
+            <!-- Carrusel Container -->
+            <div class="volunteer-carousel relative max-w-4xl mx-auto">
+                <!-- Carrusel Items -->
+                <div class="volunteer-track">
+                    <!-- Item 1 - Techo -->
+                    <div class="volunteer-item">
+                        <div class="bg-gradient-to-br from-primary-50 to-secondary-50 p-6 sm:p-8 rounded-xl h-full">
+                            <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 uppercase break-words">Voluntario Permanente</h3>
+                            <h4 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-700 break-words">Techo Chile</h4>
+                            
+                            <!-- Sección de fechas -->
+                            <div class="flex items-center text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 flex-wrap">
+                                <span class="mr-2">📅</span>
+                                <span>Desde: <span class="font-medium">Enero, 2023</span></span>
+                                <span class="mx-2">-</span>
+                                <span>Hasta: <span class="font-medium">Actualidad</span></span>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base break-words">Me he desempeñado como voluntario permanente en dos comunidades, siendo Coordinador General de estas mismas. Trabajando desarrollo comunitario y niñez. Además he coordinado voluntarios dentro de la intervención, en la colecta nacional y en los trabajos de invierno y verano realizados por la misma institución.</p>
+                            <div class="space-y-2 sm:space-y-3 flex flex-wrap gap-2">
+                                <span class="inline-block bg-primary-100 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Capacitaciones</span>
+                                <span class="inline-block bg-secondary-100 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Construcción</span>
+                                <span class="inline-block bg-accent-100 text-accent-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Educación</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 - Grupo de Robótica -->
+                    <div class="volunteer-item">
+                        <div class="bg-gradient-to-br from-primary-50 to-secondary-50 p-6 sm:p-8 rounded-xl h-full">
+                            <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 uppercase break-words">GRUDEC - RAS</h3>
+                            <h4 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-700 break-words">Grupo de interés, rama IEEE</h4>
+                            
+                            <!-- Sección de fechas -->
+                            <div class="flex items-center text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 flex-wrap">
+                                <span class="mr-2">📅</span>
+                                <span>Desde: <span class="font-medium">2023</span></span>
+                                <span class="mx-2">-</span>
+                                <span>Hasta: <span class="font-medium">Actualidad</span></span>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base break-words">Fui participante regular del grupo, compitiendo con este mismo en la All Chile Robotics Contest del 2024, perfeccionando habilidades en la robótica y control. Siendo parte el 2025 de la directiva como WebMaster de este mismo grupo.</p>
+                            <div class="space-y-2 sm:space-y-3 flex flex-wrap gap-2">
+                                <span class="inline-block bg-primary-100 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Control PID</span>
+                                <span class="inline-block bg-secondary-100 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Arduino</span>
+                                <span class="inline-block bg-accent-100 text-accent-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Competencias</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 - Voluntariado Robótica -->
+                    <div class="volunteer-item">
+                        <div class="bg-gradient-to-br from-primary-50 to-secondary-50 p-6 sm:p-8 rounded-xl h-full">
+                            <h3 class="text-lg sm:text-xl font-bold mb-1 sm:mb-2 uppercase break-words">Mentor de Robótica</h3>
+                            <h4 class="text-md sm:text-lg font-semibold mb-2 sm:mb-3 text-gray-700 break-words">Fundación Gabriel y Mary Mustakis</h4>
+                            
+                            <!-- Sección de fechas -->
+                            <div class="flex items-center text-sm sm:text-base text-gray-500 mb-3 sm:mb-4 flex-wrap">
+                                <span class="mr-2">📅</span>
+                                <span>Desde: <span class="font-medium">Marzo 2023</span></span>
+                                <span class="mx-2">-</span>
+                                <span>Hasta: <span class="font-medium">Marzo 2024</span></span>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base break-words">Me desempeñé como mediador, colaborando en la metodología de clase y acompañamiento a estudiantes del programa</p>
+                            <div class="space-y-2 sm:space-y-3 flex flex-wrap gap-2">
+                                <span class="inline-block bg-primary-100 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Desarrollo Integral</span>
+                                <span class="inline-block bg-secondary-100 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">C++</span>
+                                <span class="inline-block bg-accent-100 text-accent-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium break-words">Arduino</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="volunteer-nav">
+                    <button class="volunteer-prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button class="volunteer-next">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Indicators -->
+                <div class="volunteer-indicators">
+                    <button class="volunteer-indicator active" data-index="0"></button>
+                    <button class="volunteer-indicator" data-index="1"></button>
+                    <button class="volunteer-indicator" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section id="classes" class="py-12 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-center uppercase">Clases Particulares</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base">
+                Si te cuesta aprender de los profesores y necesitas el plus que no te dan, puedes hacerlo de forma individual o con más compañeros
+            </p>
+            
+            <div class="classes-carousel relative max-w-5xl mx-auto rounded-xl shadow-lg overflow-hidden bg-white">                
+                <!-- Slide 1 -->
+                <div class="class-slide active p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                    <div class="class-card">
+                        <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
+                            <div class="w-full md:w-1/3">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                    alt="Programación Web"
+                                    class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 uppercase">Programación</h3>
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Aprende a programar de una forma mucho más personalizada en diversos lenguajes.</p>
+                                <div class="flex flex-wrap gap-1 sm:gap-2">
+                                    <span class="inline-block bg-blue-100 text-blue-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Python</span>
+                                    <span class="inline-block bg-orange-100 text-orange-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Matlab</span>
+                                    <span class="inline-block bg-purple-100 text-purple-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">C++</span>
+                                    <span class="inline-block bg-gray-100 text-gray-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Latex</span>
+                                    <span class="inline-block bg-green-100 text-green-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Arduino</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="class-slide p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                    <div class="class-card">
+                        <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
+                            <div class="w-full md:w-1/3">
+                                <img src="./fotos/electronica.jpg" 
+                                    alt="Programación Web"
+                                    class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 uppercase">Ingeniería Electrónica</h3>
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Puedes ser capáz de adquirir conocimientos diversos en la rama de la Ingeniería Civil Electróncia.</p>
+                                <div class="flex flex-wrap gap-1 sm:gap-2 mt-auto">
+                                    <span class="inline-block bg-emerald-100 text-emerald-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Modelación de Procesos</span>
+                                    <span class="inline-block bg-amber-100 text-amber-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Sistemas Lineales Dinámicos</span>
+                                    <span class="inline-block bg-violet-100 text-violet-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Teoría de Circuitos</span>
+                                    <span class="inline-block bg-pink-100 text-pink-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Redes de Corriente Alterna</span>
+                                    <span class="inline-block bg-cyan-100 text-cyan-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Electrónica</span>
+                                    <span class="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium">Electromagnetismo</span>                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="class-slide p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                    <div class="class-card">
+                        <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
+                            <div class="w-full md:w-1/3">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                    alt="Programación Web"
+                                    class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 uppercase">Calculo</h3>
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Practica, mide y refuerza tus conocimientos en unas de las asignaturas más complicadas de plan común</p>
+                                <div class="flex flex-wrap gap-1 sm:gap-2 mt-auto">
+                                    <span class="bg-blue-200 text-blue-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Cálculo 1</span>
+                                    <span class="bg-green-200 text-green-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Cálculo 2</span>
+                                    <span class="bg-purple-200 text-purple-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Cálculo 3</span>
+                                    <span class="bg-red-200 text-red-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Cálculo 4</span>
+                                    <span class="bg-amber-200 text-amber-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Calculo Numerico</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 4 -->
+                <div class="class-slide p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                    <div class="class-card">
+                        <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
+                            <div class="w-full md:w-1/3">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                    alt="Programación Web"
+                                    class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 uppercase">Algebra</h3>
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Practica, mide y refuerza tus conocimientos en unas de las asignaturas más complicadas de plan común</p>
+                                <div class="flex flex-wrap gap-1 sm:gap-2 mt-auto">
+                                    <span class="bg-blue-200 text-blue-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Algebra 1</span>
+                                    <span class="bg-green-200 text-green-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Algebra 2</span>
+                                    <span class="bg-purple-200 text-purple-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Ecuaciones Diferenciales Ordinarias</span>
+                                    <span class="bg-red-200 text-red-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Ecuaciones Diferenciales</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 5 -->
+                <div class="class-slide p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                    <div class="class-card">
+                        <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
+                            <div class="w-full md:w-1/3">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                    alt="Programación Web"
+                                    class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 uppercase">Química</h3>
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Practica, mide y refuerza tus conocimientos en unas de las asignaturas más complicadas de plan común</p>
+                                <div class="flex flex-wrap gap-1 sm:gap-2 mt-auto">
+                                    <span class="bg-primary-200 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Química 1</span>
+                                    <span class="bg-secondary-200 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Química 2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 6 -->
+                <div class="class-slide p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-primary-100">
+                    <div class="class-card">
+                        <div class="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
+                            <div class="w-full md:w-1/3">
+                                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                    alt="Programación Web"
+                                    class="w-full h-40 sm:h-48 object-cover rounded-lg shadow-md">
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 uppercase">Física</h3>
+                                <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Practica, mide y refuerza tus conocimientos en unas de las asignaturas más complicadas de plan común</p>
+                                <div class="flex flex-wrap gap-1 sm:gap-2 mt-auto">
+                                    <span class="bg-primary-200 text-primary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Física 1</span>
+                                    <span class="bg-secondary-200 text-secondary-800 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium uppercase">Física 2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controles del carrusel -->
+                <button id="prevClassBtn" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 p-2 sm:p-3 rounded-full shadow-md transition-all">
+                    <i class="fas fa-chevron-left text-sm sm:text-base"></i>
+                </button>
+                <button id="nextClassBtn" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 p-2 sm:p-3 rounded-full shadow-md transition-all">
+                    <i class="fas fa-chevron-right text-sm sm:text-base"></i>
+                </button>
+                
+                <!-- Indicadores -->
+                <div class="class-indicators">
+                    <button class="class-indicator active" data-index="0"></button>
+                    <button class="class-indicator" data-index="1"></button>
+                    <button class="class-indicator" data-index="2"></button>
+                    <button class="class-indicator" data-index="3"></button>
+                    <button class="class-indicator" data-index="4"></button>
+                    <button class="class-indicator" data-index="5"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 sm:py-20 bg-gray-900 text-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 uppercase">Contacto</h2>
+                <p class="text-gray-300 mb-8 sm:mb-10 text-sm sm:text-base">Puedes contactarme a través de estos medios:</p>
+                
+                <div class="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
+                    <a href="https://github.com/TheNigis" class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors text-sm sm:text-base">
+                        <i class="fab fa-github mr-2 sm:mr-3 text-lg sm:text-xl"></i>
+                        <span class="font-medium">TheNigis</span>
+                    </a>
+                    <a href="www.linkedin.com/in/cristian-saavedra-vasquez" class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors text-sm sm:text-base">
+                        <i class="fab fa-linkedin-in mr-2 sm:mr-3 text-lg sm:text-xl"></i>
+                        <span class="font-medium">Cristian Saavedra Vásquez</span>
+                    </a>
+                    <a href="mailto:crsaavedra2023@udec.cl" class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-primary-600 rounded-full hover:bg-primary-700 transition-colors text-sm sm:text-base">
+                        <i class="fas fa-envelope mr-2 sm:mr-3 text-lg sm:text-xl"></i>
+                        <span class="font-medium">crsaavedra2023@udec.cl</span>
+                    </a>
+                </div>
+                
+                <a href="https://api.whatsapp.com/send?phone=56940453889" class="inline-block px-6 py-2 sm:px-8 sm:py-3 bg-white text-gray-900 font-medium rounded-full hover:bg-gray-100 transition-colors uppercase text-sm sm:text-base">
+                    Enviar mensaje por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-6 sm:py-8">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">© 2025 Cristian Saavedra. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.carousel-track');
+            const items = document.querySelectorAll('.carousel-item');
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            
+            let currentIndex = 0;
+            const itemCount = items.length;
+            
+            function updateCarousel() {
+                const itemWidth = 100 / itemCount;
+                track.style.transform = `translateX(-${currentIndex * (100 / itemCount)}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Next button
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            });
+            
+            // Previous button
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateCarousel();
+            });
+            
+            // Indicator clicks
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = parseInt(indicator.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+            
+            // Initialize
+            updateCarousel();
+        });
+    </script>
+
+    <!-- Script del Carrusel de Clases -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.class-slide');
+            const indicators = document.querySelectorAll('.class-indicator');
+            const prevBtn = document.getElementById('prevClassBtn');
+            const nextBtn = document.getElementById('nextClassBtn');
+            let currentIndex = 0;
+            let interval;
+            
+            // Iniciar el carrusel automático
+            function startCarousel() {
+                interval = setInterval(() => {
+                    nextSlide();
+                }, 5000); // Cambia cada 5 segundos
+            }
+            
+            // Detener el carrusel cuando el usuario interactúa
+            function resetCarousel() {
+                clearInterval(interval);
+                startCarousel();
+            }
+            
+            // Mostrar slide específico
+            function showSlide(index) {
+                // Asegurar que el índice esté dentro de los límites
+                if (index < 0) {
+                    index = slides.length - 1;
+                } else if (index >= slides.length) {
+                    index = 0;
+                }
+                
+                // Ocultar todos los slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active', 'prev', 'next');
+                });
+                
+                // Actualizar clases para animación
+                slides[currentIndex].classList.add('prev');
+                slides[index].classList.add('active');
+                
+                // Determinar la clase para el siguiente elemento
+                const nextIndex = index + 1 >= slides.length ? 0 : index + 1;
+                slides[nextIndex].classList.add('next');
+                
+                // Actualizar indicadores
+                indicators.forEach(indicator => {
+                    indicator.classList.remove('active');
+                });
+                indicators[index].classList.add('active');
+                
+                currentIndex = index;
+            }
+            
+            // Navegación
+            function nextSlide() {
+                showSlide(currentIndex + 1);
+                resetCarousel();
+            }
+            
+            function prevSlide() {
+                showSlide(currentIndex - 1);
+                resetCarousel();
+            }
+            
+            // Event listeners
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            // Navegación por indicadores
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    showSlide(index);
+                    resetCarousel();
+                });
+            });
+            
+            // Iniciar el carrusel
+            startCarousel();
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleccionar elementos del carrusel de voluntariados
+            const volunteerTrack = document.querySelector('.volunteer-track');
+            const volunteerItems = document.querySelectorAll('.volunteer-item');
+            const prevBtn = document.querySelector('.volunteer-prev');
+            const nextBtn = document.querySelector('.volunteer-next');
+            const indicators = document.querySelectorAll('.volunteer-indicator');
+            
+            let currentIndex = 0;
+            const itemCount = volunteerItems.length;
+            
+            // Función para actualizar la posición del carrusel
+            function updateCarousel() {
+                volunteerTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Actualizar indicadores
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Evento para botón siguiente
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            });
+            
+            // Evento para botón anterior
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateCarousel();
+            });
+            
+            // Eventos para los indicadores
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+            
+            // Inicializar el carrusel
+            updateCarousel();
+            
+            // Opcional: Carrusel automático
+            let autoSlideInterval;
+            
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % itemCount;
+                    updateCarousel();
+                }, 5000); // Cambia cada 5 segundos
+            }
+            
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+            
+            // Iniciar el carrusel automático
+            startAutoSlide();
+            
+            // Pausar cuando el mouse está sobre el carrusel
+            const carouselContainer = document.querySelector('.volunteer-carousel');
+            carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+            carouselContainer.addEventListener('mouseleave', startAutoSlide);
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                // Alternar la visibilidad del menú móvil
+                mobileMenu.classList.toggle('hidden');
+                
+                // Cambiar el icono del botón (opcional)
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                menuToggle.innerHTML = isOpen 
+                    ? `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                       </svg>`
+                    : `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                       </svg>`;
+            });
+            
+            // Cerrar el menú al hacer clic en un enlace (opcional)
+            const menuLinks = mobileMenu.querySelectorAll('a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

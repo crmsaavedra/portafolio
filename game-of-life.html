@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de la Vida | Portafolio Cristian Saavedra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(45deg, #0ea5e9, #8b5cf6);
+        }
+        
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 1px;
+            background-color: #e2e8f0;
+            border: 2px solid #cbd5e1;
+            margin: 1rem 0;
+        }
+        
+        .cell {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1;
+            background-color: #f8fafc;
+            transition: background-color 0.2s ease;
+        }
+        
+        .cell.alive {
+            background-color: #22c55e; /* Color accent-500 */
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .game-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .game-btn-primary {
+            background-color: #0ea5e9;
+            color: white;
+        }
+        
+        .game-btn-primary:hover {
+            background-color: #0284c7;
+        }
+        
+        .game-btn-secondary {
+            background-color: #8b5cf6;
+            color: white;
+        }
+        
+        .game-btn-secondary:hover {
+            background-color: #7c3aed;
+        }
+        
+        .game-btn-accent {
+            background-color: #22c55e;
+            color: white;
+        }
+        
+        .game-btn-accent:hover {
+            background-color: #16a34a;
+        }
+        
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .stat-box {
+            background-color: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900 antialiased">
+    <!-- Header -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-sm border-b border-gray-100 z-50">
+        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <a href="#" class="text-2xl font-bold">
+                <span class="gradient-text">CRISTIAN</span>
+                <span class="text-gray-800">SAAVEDRA</span>
+            </a>
+            <nav class="mt-4 md:mt-0">
+                <ul class="flex space-x-8">
+                    <li><a href="/" class="font-medium hover:text-primary-600 transition-colors">Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4 sm:px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2">
+                    <span class="gradient-text">Juego de la Vida</span>
+                </h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Simulación del autómata celular creado por Cristian Saavedra
+                </p>
+            </div>
+            
+            <div class="game-container bg-white p-6 rounded-xl shadow-lg">
+                <div class="controls">
+                    <button id="start" class="game-btn game-btn-primary">
+                        <i class="fas fa-play"></i> Iniciar
+                    </button>
+                    <button id="stop" disabled class="game-btn game-btn-primary">
+                        <i class="fas fa-pause"></i> Detener
+                    </button>
+                    <button id="clear" class="game-btn game-btn-secondary">
+                        <i class="fas fa-trash"></i> Limpiar
+                    </button>
+                    <button id="random" class="game-btn game-btn-accent">
+                        <i class="fas fa-random"></i> Aleatorio
+                    </button>
+                </div>
+                
+                <div class="speed-control justify-center">
+                    <span class="text-gray-700"><i class="fas fa-tachometer-alt mr-2"></i>Velocidad:</span>
+                    <input type="range" id="speed" min="50" max="1000" value="200" class="w-40 sm:w-64">
+                    <span id="speed-value" class="text-gray-700 font-mono">200ms</span>
+                </div>
+                
+                <div class="grid" id="grid" style="grid-template-columns: repeat(40, 1fr);"></div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <i class="fas fa-history mr-2 text-primary-600"></i>
+                        Generación: <span id="generation" class="font-mono">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-heart mr-2 text-accent-600"></i>
+                        Células: <span id="alive-count" class="font-mono">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-gray-600 text-sm">
+                <p class="text-center">
+                    <strong>Instrucciones:</strong> Haz clic en las celdas para activarlas/desactivarlas, 
+                    luego presiona "Iniciar" para comenzar la simulación.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>© 2025 Cristian Saavedra. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gridElement = document.getElementById('grid');
+            const startButton = document.getElementById('start');
+            const stopButton = document.getElementById('stop');
+            const clearButton = document.getElementById('clear');
+            const randomButton = document.getElementById('random');
+            const generationDisplay = document.getElementById('generation');
+            const aliveCountDisplay = document.getElementById('alive-count');
+            const speedControl = document.getElementById('speed');
+            const speedValue = document.getElementById('speed-value');
+            
+            const rows = 30;
+            const cols = 40;
+            let grid = createEmptyGrid();
+            let nextGrid = createEmptyGrid();
+            let generation = 0;
+            let simulationInterval = null;
+            let simulationSpeed = 200;
+            
+            // Crear la cuadrícula visual
+            function createGrid() {
+                gridElement.innerHTML = '';
+                gridElement.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+                
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.dataset.row = i;
+                        cell.dataset.col = j;
+                        cell.addEventListener('click', toggleCell);
+                        gridElement.appendChild(cell);
+                    }
+                }
+                updateGridDisplay();
+            }
+            
+            // Crear una cuadrícula vacía
+            function createEmptyGrid() {
+                return Array(rows).fill().map(() => Array(cols).fill(false));
+            }
+            
+            // Alternar el estado de una celda
+            function toggleCell(e) {
+                const row = parseInt(e.target.dataset.row);
+                const col = parseInt(e.target.dataset.col);
+                grid[row][col] = !grid[row][col];
+                updateGridDisplay();
+                updateStats();
+            }
+            
+            // Actualizar la visualización de la cuadrícula
+            function updateGridDisplay() {
+                const cells = document.querySelectorAll('.cell');
+                cells.forEach(cell => {
+                    const row = parseInt(cell.dataset.row);
+                    const col = parseInt(cell.dataset.col);
+                    cell.classList.toggle('alive', grid[row][col]);
+                });
+            }
+            
+            // Calcular la siguiente generación
+            function nextGeneration() {
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        const neighbors = countNeighbors(i, j);
+                        
+                        // Reglas del Juego de la Vida
+                        if (grid[i][j]) {
+                            nextGrid[i][j] = neighbors === 2 || neighbors === 3;
+                        } else {
+                            nextGrid[i][j] = neighbors === 3;
+                        }
+                    }
+                }
+                
+                // Intercambiar las cuadrículas
+                [grid, nextGrid] = [nextGrid, grid];
+                generation++;
+                updateGridDisplay();
+                updateStats();
+            }
+            
+            // Contar vecinos vivos
+            function countNeighbors(row, col) {
+                let count = 0;
+                for (let i = -1; i <= 1; i++) {
+                    for (let j = -1; j <= 1; j++) {
+                        if (i === 0 && j === 0) continue;
+                        
+                        const newRow = (row + i + rows) % rows;
+                        const newCol = (col + j + cols) % cols;
+                        count += grid[newRow][newCol] ? 1 : 0;
+                    }
+                }
+                return count;
+            }
+            
+            // Actualizar estadísticas
+            function updateStats() {
+                let aliveCount = grid.flat().filter(cell => cell).length;
+                generationDisplay.textContent = generation;
+                aliveCountDisplay.textContent = aliveCount;
+            }
+            
+            // Iniciar la simulación
+            function startSimulation() {
+                if (simulationInterval) return;
+                
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                clearButton.disabled = true;
+                randomButton.disabled = true;
+                
+                simulationInterval = setInterval(nextGeneration, simulationSpeed);
+            }
+            
+            // Detener la simulación
+            function stopSimulation() {
+                clearInterval(simulationInterval);
+                simulationInterval = null;
+                
+                startButton.disabled = false;
+                stopButton.disabled = true;
+                clearButton.disabled = false;
+                randomButton.disabled = false;
+            }
+            
+            // Limpiar la cuadrícula
+            function clearGrid() {
+                stopSimulation();
+                grid = createEmptyGrid();
+                generation = 0;
+                updateGridDisplay();
+                updateStats();
+            }
+            
+            // Generar un patrón aleatorio
+            function randomGrid() {
+                stopSimulation();
+                for (let i = 0; i < rows; i++) {
+                    for (let j = 0; j < cols; j++) {
+                        grid[i][j] = Math.random() > 0.7;
+                    }
+                }
+                generation = 0;
+                updateGridDisplay();
+                updateStats();
+            }
+            
+            // Event listeners
+            startButton.addEventListener('click', startSimulation);
+            stopButton.addEventListener('click', stopSimulation);
+            clearButton.addEventListener('click', clearGrid);
+            randomButton.addEventListener('click', randomGrid);
+            
+            speedControl.addEventListener('input', function() {
+                simulationSpeed = 1050 - this.value;
+                speedValue.textContent = simulationSpeed + 'ms';
+                
+                if (simulationInterval) {
+                    stopSimulation();
+                    startSimulation();
+                }
+            });
+            
+            // Inicializar
+            createGrid();
+        });
+    </script>
+</body>
+</html>
